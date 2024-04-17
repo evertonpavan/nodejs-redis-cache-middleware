@@ -47,7 +47,7 @@ async function writeData(key: string, data: any, options: { EX: number }) {
   if (isRedisWorking()) {
     try {
       // Write data to the Redis cache
-      await redisClient.set(key, JSON.stringify(data), options)
+      await redisClient.set(key, JSON.stringify(data.data), options)
     } catch (err) {
       console.error(`Failed to cache data for key=${key}`, err)
     }
@@ -84,9 +84,11 @@ function redisCachingMiddleware(options = { EX: 21600 }) {
       if (cachedValue) {
         try {
           // If it is JSON data, then return it
+          const data = JSON.parse(cachedValue)
+
           return res.send({
             fromCache: true,
-            data: JSON.parse(cachedValue),
+            data,
           })
         } catch (err) {
           console.error('Error parsing cached JSON data:', err)
