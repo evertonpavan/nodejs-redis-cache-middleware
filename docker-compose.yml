@@ -3,7 +3,6 @@ version: '3.7'
 services:
   redis:
     image: redis:latest
-    # image: bitnami/redis:latest
     container_name: redis
     hostname: redislorediscal
     restart: always
@@ -11,14 +10,9 @@ services:
       - "6379:6379"
     volumes:
       - redis_data:/data
-      # - redis_data/dаta:/root/redis
-      # - redis_data/redis.conf:/usr/local/etc/redis/redis.conf
     environment:
       - REDIS_PASSWORD=redis
       - REDIS_PORT=6379
-      - REDIS_DATABASES=16
-      # - ALLOW_EMPTY_PASSWORD=yes
-
 
 volumes:
   redis_data:
